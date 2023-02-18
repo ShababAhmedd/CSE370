@@ -1,0 +1,203 @@
+Last login: Sat Feb 11 20:50:55 on ttys000
+[3] 24533
+shabab@Shababs-MacBook-Pro ~ % /Applications/xampp/xamppfiles/bin/mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 35
+Server version: 10.4.27-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++------------------------+
+| Database               |
++------------------------+
+| information_schema     |
+| lab_homework_01        |
+| mysql                  |
+| performance_schema     |
+| phpmyadmin             |
+| shabab_cse370_spring23 |
+| test                   |
++------------------------+
+7 rows in set (0.009 sec)
+
+MariaDB [(none)]> use lab_homework_01;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           | 719491          | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            | 601744          | 2020-05-18   |          7 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  | 630488          | 2020-05-10   |         10 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+11 rows in set (0.003 sec)
+
+MariaDB [lab_homework_01]> alter table developers rename column influence_count to followers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column influence_count to followers' at line 1
+MariaDB [lab_homework_01]> alter table developers rename column 'influence_count' to 'followers';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column 'influence_count' to 'followers'' at line 1
+MariaDB [lab_homework_01]> alter table developers rename column influence_count to followers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column influence_count to followers' at line 1
+MariaDB [lab_homework_01]> alter table developers change influence_count followers int;
+Query OK, 11 rows affected (0.064 sec)             
+Records: 11  Duplicates: 0  Warnings: 0
+
+MariaDB [lab_homework_01]> describe developers;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| member_id    | int(11)     | YES  |     | NULL    |       |
+| name         | varchar(30) | YES  |     | NULL    |       |
+| email        | varchar(30) | YES  |     | NULL    |       |
+| followers    | int(11)     | YES  |     | NULL    |       |
+| joining_date | date        | YES  |     | NULL    |       |
+| multiplier   | int(11)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.006 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------+--------------+------------+
+| member_id | name             | email                    | followers | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       |    739360 | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          |    633632 | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      |    939570 | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            |    982630 | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          |    937927 | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         |    968827 | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com |    570724 | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  |    864615 | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           |    719491 | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            |    601744 | 2020-05-18   |          7 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  |    630488 | 2020-05-10   |         10 |
++-----------+------------------+--------------------------+-----------+--------------+------------+
+11 rows in set (0.002 sec)
+
+MariaDB [lab_homework_01]> select name, email, followers from developers;
++------------------+--------------------------+-----------+
+| name             | email                    | followers |
++------------------+--------------------------+-----------+
+| Taylor Otwell    | otwell@laravel.com       |    739360 |
+| Ryan Dahl        | ryan@nodejs.org          |    633632 |
+| Brendan Eich     | eich@javascript.com      |    939570 |
+| Evan You         | you@vuejs.org            |    982630 |
+| Rasmus Lerdorf   | lerdorf@php.net          |    937927 |
+| Guido Van Rossum | guido@python.org         |    968827 |
+| Adrian Holovaty  | adrian@djangoproject.com |    570724 |
+| Simon Willison   | simon@djangoproject.com  |    864615 |
+| James Gosling    | james@java.com           |    719491 |
+| Rod Johnson      | rod@spring.io            |    601744 |
+| Satoshi Nakamoto | nakamoto@blockchain.com  |    630488 |
++------------------+--------------------------+-----------+
+11 rows in set (0.009 sec)
+
+MariaDB [lab_homework_01]> select name, ((followers*100/1000000)*(multipliers*100/20))//100 as efficiency from developers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/100 as efficiency from developers' at line 1
+MariaDB [lab_homework_01]> select ((followers*100/1000000)*(multipliers*100/20))//100 as efficiency from developers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '/100 as efficiency from developers' at line 1
+MariaDB [lab_homework_01]> select name, ((followers*100/1000000) * (multiplier*100/20))/100 as efficiency from developers;
++------------------+-----------------+
+| name             | efficiency      |
++------------------+-----------------+
+| Taylor Otwell    | 36.968000000000 |
+| Ryan Dahl        | 31.681600000000 |
+| Brendan Eich     | 37.582800000000 |
+| Evan You         | 34.392050000000 |
+| Rasmus Lerdorf   | 37.517080000000 |
+| Guido Van Rossum | 92.038565000000 |
+| Adrian Holovaty  | 14.268100000000 |
+| Simon Willison   | 17.292300000000 |
+| James Gosling    | 17.987275000000 |
+| Rod Johnson      | 21.061040000000 |
+| Satoshi Nakamoto | 31.524400000000 |
++------------------+-----------------+
+11 rows in set (0.008 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------+--------------+------------+
+| member_id | name             | email                    | followers | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       |    739360 | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          |    633632 | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      |    939570 | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            |    982630 | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          |    937927 | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         |    968827 | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com |    570724 | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  |    864615 | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           |    719491 | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            |    601744 | 2020-05-18   |          7 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  |    630488 | 2020-05-10   |         10 |
++-----------+------------------+--------------------------+-----------+--------------+------------+
+11 rows in set (0.009 sec)
+
+MariaDB [lab_homework_01]> select member_id, name, email, joining_date, multiplier, followers+10 as followers from developers;
++-----------+------------------+--------------------------+--------------+------------+-----------+
+| member_id | name             | email                    | joining_date | multiplier | followers |
++-----------+------------------+--------------------------+--------------+------------+-----------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 2020-06-10   |         10 |    739370 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 2020-04-22   |         10 |    633642 |
+|         3 | Brendan Eich     | eich@javascript.com      | 2020-05-07   |          8 |    939580 |
+|         5 | Evan You         | you@vuejs.org            | 2020-06-11   |          7 |    982640 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 2020-06-03   |          8 |    937937 |
+|         7 | Guido Van Rossum | guido@python.org         | 2020-07-18   |         19 |    968837 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 2020-05-07   |          5 |    570734 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 2020-04-30   |          4 |    864625 |
+|        10 | James Gosling    | james@java.com           | 2020-05-18   |          5 |    719501 |
+|        11 | Rod Johnson      | rod@spring.io            | 2020-05-18   |          7 |    601754 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  | 2020-05-10   |         10 |    630498 |
++-----------+------------------+--------------------------+--------------+------------+-----------+
+11 rows in set (0.023 sec)
+
+MariaDB [lab_homework_01]> select member_id, name, email,followers, joining_date, multiplier, followers+10 as followers from developers;
++-----------+------------------+--------------------------+-----------+--------------+------------+-----------+
+| member_id | name             | email                    | followers | joining_date | multiplier | followers |
++-----------+------------------+--------------------------+-----------+--------------+------------+-----------+
+|         1 | Taylor Otwell    | otwell@laravel.com       |    739360 | 2020-06-10   |         10 |    739370 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          |    633632 | 2020-04-22   |         10 |    633642 |
+|         3 | Brendan Eich     | eich@javascript.com      |    939570 | 2020-05-07   |          8 |    939580 |
+|         5 | Evan You         | you@vuejs.org            |    982630 | 2020-06-11   |          7 |    982640 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          |    937927 | 2020-06-03   |          8 |    937937 |
+|         7 | Guido Van Rossum | guido@python.org         |    968827 | 2020-07-18   |         19 |    968837 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com |    570724 | 2020-05-07   |          5 |    570734 |
+|         9 | Simon Willison   | simon@djangoproject.com  |    864615 | 2020-04-30   |          4 |    864625 |
+|        10 | James Gosling    | james@java.com           |    719491 | 2020-05-18   |          5 |    719501 |
+|        11 | Rod Johnson      | rod@spring.io            |    601744 | 2020-05-18   |          7 |    601754 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  |    630488 | 2020-05-10   |         10 |    630498 |
++-----------+------------------+--------------------------+-----------+--------------+------------+-----------+
+11 rows in set (0.001 sec)
+
+MariaDB [lab_homework_01]> select member_id, name, email, joining_date, multiplier, followers+10 from developers;
++-----------+------------------+--------------------------+--------------+------------+--------------+
+| member_id | name             | email                    | joining_date | multiplier | followers+10 |
++-----------+------------------+--------------------------+--------------+------------+--------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 2020-06-10   |         10 |       739370 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 2020-04-22   |         10 |       633642 |
+|         3 | Brendan Eich     | eich@javascript.com      | 2020-05-07   |          8 |       939580 |
+|         5 | Evan You         | you@vuejs.org            | 2020-06-11   |          7 |       982640 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 2020-06-03   |          8 |       937937 |
+|         7 | Guido Van Rossum | guido@python.org         | 2020-07-18   |         19 |       968837 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 2020-05-07   |          5 |       570734 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 2020-04-30   |          4 |       864625 |
+|        10 | James Gosling    | james@java.com           | 2020-05-18   |          5 |       719501 |
+|        11 | Rod Johnson      | rod@spring.io            | 2020-05-18   |          7 |       601754 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  | 2020-05-10   |         10 |       630498 |
++-----------+------------------+--------------------------+--------------+------------+--------------+
+11 rows in set (0.002 sec)
+
+MariaDB [lab_homework_01]> 

@@ -1,0 +1,264 @@
+Last login: Sat Feb 11 23:24:01 on ttys000
+[3] 32618
+shabab@Shababs-MacBook-Pro ~ % /Applications/xampp/xamppfiles/bin/mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 36
+Server version: 10.4.27-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+MariaDB [(none)]> show databases;
++------------------------+
+| Database               |
++------------------------+
+| information_schema     |
+| lab_homework_01        |
+| mysql                  |
+| performance_schema     |
+| phpmyadmin             |
+| shabab_cse370_spring23 |
+| test                   |
++------------------------+
+7 rows in set (0.006 sec)
+
+MariaDB [(none)]> uses shabab_cse370_spring23;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'uses shabab_cse370_spring23' at line 1
+MariaDB [(none)]> use shabab_cse370_spring23;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [shabab_cse370_spring23]> alter table lab_grades change submision_date sub_date date;
+ERROR 1054 (42S22): Unknown column 'submision_date' in 'lab_grades'
+MariaDB [shabab_cse370_spring23]> show tables;
++----------------------------------+
+| Tables_in_shabab_cse370_spring23 |
++----------------------------------+
+| lab_grades                       |
++----------------------------------+
+1 row in set (0.003 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | submission_date |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir    | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15      |
+| s003       | Tasneem | CSE   | 1       |            8 |            18 | 3.57 | 2018-09-18      |
+| s005       | Arafat  | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13      |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15      |
+| s007       | Muhtadi | CSE   | 1       |           10 |             9 | 3.67 | 2018-09-16      |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+6 rows in set (0.009 sec)
+
+MariaDB [shabab_cse370_spring23]> alter table lab_grades change submission_date sub_date date;
+Query OK, 0 rows affected (0.025 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [shabab_cse370_spring23]> describe lab_grades;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| student_id    | char(4)      | YES  |     | NULL    |       |
+| name          | varchar(30)  | YES  |     | NULL    |       |
+| major         | char(3)      | YES  |     | NULL    |       |
+| section       | char(1)      | YES  |     | NULL    |       |
+| days_present  | int(11)      | YES  |     | NULL    |       |
+| project_marks | double       | YES  |     | NULL    |       |
+| cgpa          | decimal(3,2) | YES  |     | NULL    |       |
+| sub_date      | date         | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+8 rows in set (0.012 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| soo1       | Abir    | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15 |
+| s003       | Tasneem | CSE   | 1       |            8 |            18 | 3.57 | 2018-09-18 |
+| s005       | Arafat  | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15 |
+| s007       | Muhtadi | CSE   | 1       |           10 |             9 | 3.67 | 2018-09-16 |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+6 rows in set (0.002 sec)
+
+MariaDB [shabab_cse370_spring23]> select student_id, name, project_marks from lab_grades;
++------------+---------+---------------+
+| student_id | name    | project_marks |
++------------+---------+---------------+
+| soo1       | Abir    |          18.5 |
+| s002       | Nafis   |            20 |
+| s003       | Tasneem |            18 |
+| s005       | Arafat  |            20 |
+| s006       | Tasneem |          17.5 |
+| s007       | Muhtadi |             9 |
++------------+---------+---------------+
+6 rows in set (0.004 sec)
+
+MariaDB [shabab_cse370_spring23]> select name, project_marks+days_present*5/12 as total_marks from lab_grades;
++---------+--------------------+
+| name    | total_marks        |
++---------+--------------------+
+| Abir    |       22.666666666 |
+| Nafis   |                 25 |
+| Tasneem |       21.333333333 |
+| Arafat  |       24.583333333 |
+| Tasneem |               22.5 |
+| Muhtadi | 13.166666666000001 |
++---------+--------------------+
+6 rows in set (0.024 sec)
+
+MariaDB [shabab_cse370_spring23]> select name, project_marks+days_present*5/12 from lab_grades;
++---------+---------------------------------+
+| name    | project_marks+days_present*5/12 |
++---------+---------------------------------+
+| Abir    |                    22.666666666 |
+| Nafis   |                              25 |
+| Tasneem |                    21.333333333 |
+| Arafat  |                    24.583333333 |
+| Tasneem |                            22.5 |
+| Muhtadi |              13.166666666000001 |
++---------+---------------------------------+
+6 rows in set (0.004 sec)
+
+MariaDB [shabab_cse370_spring23]> select upper(name), lower(name) from lab_grades;
++-------------+-------------+
+| upper(name) | lower(name) |
++-------------+-------------+
+| ABIR        | abir        |
+| NAFIS       | nafis       |
+| TASNEEM     | tasneem     |
+| ARAFAT      | arafat      |
+| TASNEEM     | tasneem     |
+| MUHTADI     | muhtadi     |
++-------------+-------------+
+6 rows in set (0.036 sec)
+
+MariaDB [shabab_cse370_spring23]> select major from lab_grades;
++-------+
+| major |
++-------+
+| CSE   |
+| CSE   |
+| CSE   |
+| CSE   |
+| CSE   |
+| CSE   |
++-------+
+6 rows in set (0.009 sec)
+
+MariaDB [shabab_cse370_spring23]> select distinct major from lab_grades;
++-------+
+| major |
++-------+
+| CSE   |
++-------+
+1 row in set (0.018 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades order by name;
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| soo1       | Abir    | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
+| s005       | Arafat  | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
+| s007       | Muhtadi | CSE   | 1       |           10 |             9 | 3.67 | 2018-09-16 |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15 |
+| s003       | Tasneem | CSE   | 1       |            8 |            18 | 3.57 | 2018-09-18 |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15 |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+6 rows in set (0.034 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades order by name desc, submission_date asc;
+ERROR 1054 (42S22): Unknown column 'submission_date' in 'order clause'
+MariaDB [shabab_cse370_spring23]> select * from lab_grades order by name desc, submission_date asc;
+ERROR 1054 (42S22): Unknown column 'submission_date' in 'order clause'
+MariaDB [shabab_cse370_spring23]> select * from lab_grades order by name desc, sub_date asc;
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15 |
+| s003       | Tasneem | CSE   | 1       |            8 |            18 | 3.57 | 2018-09-18 |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15 |
+| s007       | Muhtadi | CSE   | 1       |           10 |             9 | 3.67 | 2018-09-16 |
+| s005       | Arafat  | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
+| soo1       | Abir    | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+6 rows in set (0.008 sec)
+
+MariaDB [shabab_cse370_spring23]> select name, project_marks from lab_grades where major = 'CSE';
++---------+---------------+
+| name    | project_marks |
++---------+---------------+
+| Abir    |          18.5 |
+| Nafis   |            20 |
+| Tasneem |            18 |
+| Arafat  |            20 |
+| Tasneem |          17.5 |
+| Muhtadi |             9 |
++---------+---------------+
+6 rows in set (0.033 sec)
+
+MariaDB [shabab_cse370_spring23]> select name, project_marks from lab_grades where project_marks between 17 and 19;
++---------+---------------+
+| name    | project_marks |
++---------+---------------+
+| Abir    |          18.5 |
+| Tasneem |            18 |
+| Tasneem |          17.5 |
++---------+---------------+
+3 rows in set (0.019 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where major in ('CSE','CS');
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+| soo1       | Abir    | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15 |
+| s003       | Tasneem | CSE   | 1       |            8 |            18 | 3.57 | 2018-09-18 |
+| s005       | Arafat  | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15 |
+| s007       | Muhtadi | CSE   | 1       |           10 |             9 | 3.67 | 2018-09-16 |
++------------+---------+-------+---------+--------------+---------------+------+------------+
+6 rows in set (0.018 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where project_marks>18 and submission_date between '2018-08-01' and '2018-08-31';
+ERROR 1054 (42S22): Unknown column 'submission_date' in 'where clause'
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where project_marks>18 and sub_date between '2018-08-01' and '2018-08-31';
++------------+-------+-------+---------+--------------+---------------+------+------------+
+| student_id | name  | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+-------+-------+---------+--------------+---------------+------+------------+
+| s002       | Nafis | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15 |
++------------+-------+-------+---------+--------------+---------------+------+------------+
+1 row in set (0.004 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where name like 'a%';
++------------+--------+-------+---------+--------------+---------------+------+------------+
+| student_id | name   | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+--------+-------+---------+--------------+---------------+------+------------+
+| soo1       | Abir   | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
+| s005       | Arafat | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
++------------+--------+-------+---------+--------------+---------------+------+------------+
+2 rows in set (0.018 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where name like '%a%a%';
++------------+--------+-------+---------+--------------+---------------+------+------------+
+| student_id | name   | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+--------+-------+---------+--------------+---------------+------+------------+
+| s005       | Arafat | CSE   | 2       |           11 |            20 | 4.00 | 2018-09-13 |
++------------+--------+-------+---------+--------------+---------------+------+------------+
+1 row in set (0.009 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades where name like 'a___';
++------------+------+-------+---------+--------------+---------------+------+------------+
+| student_id | name | major | section | days_present | project_marks | cgpa | sub_date   |
++------------+------+-------+---------+--------------+---------------+------+------------+
+| soo1       | Abir | CSE   | 1       |           10 |          18.5 | 3.91 | 2018-09-16 |
++------------+------+-------+---------+--------------+---------------+------+------------+
+1 row in set (0.002 sec)
+
+MariaDB [shabab_cse370_spring23]> 

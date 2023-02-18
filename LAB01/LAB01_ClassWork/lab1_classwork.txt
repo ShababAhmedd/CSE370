@@ -1,0 +1,169 @@
+Last login: Mon Feb  6 23:45:57 on ttys000
+[3] 98168
+shabab@Shababs-MacBook-Pro ~ % /Applications/xampp/xamppfiles/bin/mysql -u root -p
+
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 27
+Server version: 10.4.27-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.172 sec)
+
+MariaDB [(none)]> create database shabab_cse370_spring23
+    -> ;
+Query OK, 1 row affected (0.017 sec)
+
+MariaDB [(none)]> show databases;
++------------------------+
+| Database               |
++------------------------+
+| information_schema     |
+| mysql                  |
+| performance_schema     |
+| phpmyadmin             |
+| shabab_cse370_spring23 |
+| test                   |
++------------------------+
+6 rows in set (0.008 sec)
+
+MariaDB [(none)]> use shabab_cse370_spring23;
+Database changed
+MariaDB [shabab_cse370_spring23]> create table lab_grades
+    -> (
+    -> student_id char(4),
+    -> name varchar(30),
+    -> major char(3),
+    -> section char(1),
+    -> days_present int,
+    -> project_marks double,
+    -> cgpa decimal(3,2),
+    -> submission_date date
+    -> );
+Query OK, 0 rows affected (0.590 sec)
+
+MariaDB [shabab_cse370_spring23]> show tables;
++----------------------------------+
+| Tables_in_shabab_cse370_spring23 |
++----------------------------------+
+| lab_grades                       |
++----------------------------------+
+1 row in set (0.103 sec)
+
+MariaDB [shabab_cse370_spring23]> describe lab_grades;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| student_id      | char(4)      | YES  |     | NULL    |       |
+| name            | varchar(30)  | YES  |     | NULL    |       |
+| major           | char(3)      | YES  |     | NULL    |       |
+| section         | char(1)      | YES  |     | NULL    |       |
+| days_present    | int(11)      | YES  |     | NULL    |       |
+| project_marks   | double       | YES  |     | NULL    |       |
+| cgpa            | decimal(3,2) | YES  |     | NULL    |       |
+| submission_date | date         | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+8 rows in set (0.160 sec)
+
+MariaDB [shabab_cse370_spring23]> insert into lab_grades (student_id, name, major, section, days_present, project_marks, cgpa, submission_date) values ('soo1', 'Abir', 'CS', '1', 10, 18.5, 3.91, '2018-09-16');
+Query OK, 1 row affected (0.094 sec)
+
+MariaDB [shabab_cse370_spring23]> show lab_grades;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'lab_grades' at line 1
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name | major | section | days_present | project_marks | cgpa | submission_date |
++------------+------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir | CS    | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
++------------+------+-------+---------+--------------+---------------+------+-----------------+
+1 row in set (0.034 sec)
+
+MariaDB [shabab_cse370_spring23]> insert into lab_grades values ('s019', 'Naima', 'CSE', '2', 12, 20, 3.7, '2018-08-14'),
+    -> 's002', 'Nafis', 'CSE', '1', 12, 20, 3.86, '2018-08-15');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''s002', 'Nafis', 'CSE', '1', 12, 20, 3.86, '2018-08-15')' at line 2
+MariaDB [shabab_cse370_spring23]> insert into lab_grades values ('s019', 'Naima', 'CSE', '2', 12, 20, 3.7, '2018-08-14');
+Query OK, 1 row affected (0.039 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+-------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name  | major | section | days_present | project_marks | cgpa | submission_date |
++------------+-------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir  | CS    | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
+| s019       | Naima | CSE   | 2       |           12 |            20 | 3.70 | 2018-08-14      |
++------------+-------+-------+---------+--------------+---------------+------+-----------------+
+2 rows in set (0.003 sec)
+
+MariaDB [shabab_cse370_spring23]> insert into lab_grades values 
+    -> ('s002', 'Nafis', 'CSE', '1', 12, 20, 3.86, '2018-08-15'),
+    -> ('s003', 'Tasneem', 'CS', '1', 8, 18, 3.57, '2018-09-18')
+    -> ;
+Query OK, 2 rows affected (0.023 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | submission_date |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir    | CS    | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
+| s019       | Naima   | CSE   | 2       |           12 |            20 | 3.70 | 2018-08-14      |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15      |
+| s003       | Tasneem | CS    | 1       |            8 |            18 | 3.57 | 2018-09-18      |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+4 rows in set (0.004 sec)
+
+MariaDB [shabab_cse370_spring23]> insert into lab_grades values
+    -> ('s004', 'Nahid', 'ECE', '2', 7, 16.5, 3.25, '2018-08-20'),
+    -> ('s005', 'Arafat', 'CS', '2', 11, 20, 4.0, '2018-09-13'),
+    -> ('s006', 'Tasneem', 'CSE', '1', 12, 17.5, 3.7, '2018-08-15'),
+    -> ('s007', 'Muhtadi', 'ECE', 
+    -> '1', 10, 9, 3.67, '2018-09-16'),
+    -> ('s008', 'Farhana', 'CSE', '2', 6, 15, 2.67, '2018-08-16');
+Query OK, 5 rows affected (0.014 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | submission_date |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir    | CS    | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
+| s019       | Naima   | CSE   | 2       |           12 |            20 | 3.70 | 2018-08-14      |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15      |
+| s003       | Tasneem | CS    | 1       |            8 |            18 | 3.57 | 2018-09-18      |
+| s004       | Nahid   | ECE   | 2       |            7 |          16.5 | 3.25 | 2018-08-20      |
+| s005       | Arafat  | CS    | 2       |           11 |            20 | 4.00 | 2018-09-13      |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15      |
+| s007       | Muhtadi | ECE   | 1       |           10 |             9 | 3.67 | 2018-09-16      |
+| s008       | Farhana | CSE   | 2       |            6 |            15 | 2.67 | 2018-08-16      |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+9 rows in set (0.000 sec)
+
+MariaDB [shabab_cse370_spring23]> select * from lab_grades;
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| student_id | name    | major | section | days_present | project_marks | cgpa | submission_date |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+| soo1       | Abir    | CS    | 1       |           10 |          18.5 | 3.91 | 2018-09-16      |
+| s019       | Naima   | CSE   | 2       |           12 |            20 | 3.70 | 2018-08-14      |
+| s002       | Nafis   | CSE   | 1       |           12 |            20 | 3.86 | 2018-08-15      |
+| s003       | Tasneem | CS    | 1       |            8 |            18 | 3.57 | 2018-09-18      |
+| s004       | Nahid   | ECE   | 2       |            7 |          16.5 | 3.25 | 2018-08-20      |
+| s005       | Arafat  | CS    | 2       |           11 |            20 | 4.00 | 2018-09-13      |
+| s006       | Tasneem | CSE   | 1       |           12 |          17.5 | 3.70 | 2018-08-15      |
+| s007       | Muhtadi | ECE   | 1       |           10 |             9 | 3.67 | 2018-09-16      |
+| s008       | Farhana | CSE   | 2       |            6 |            15 | 2.67 | 2018-08-16      |
++------------+---------+-------+---------+--------------+---------------+------+-----------------+
+9 rows in set (0.010 sec)
+
+MariaDB [shabab_cse370_spring23]> 

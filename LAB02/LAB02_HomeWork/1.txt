@@ -1,0 +1,206 @@
+Last login: Sat Feb 11 20:49:13 on ttys000
+[3] 14288
+shabab@Shababs-MacBook-Pro ~ % show databases;
+zsh: command not found: show
+shabab@Shababs-MacBook-Pro ~ % /Applications/xampp/xamppfiles/bin/mysql -u root -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+shabab@Shababs-MacBook-Pro ~ % 
+shabab@Shababs-MacBook-Pro ~ % 
+shabab@Shababs-MacBook-Pro ~ % /Applications/xampp/xamppfiles/bin/mysql -u root -p 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 33
+Server version: 10.4.27-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++------------------------+
+| Database               |
++------------------------+
+| information_schema     |
+| lab_homework_01        |
+| mysql                  |
+| performance_schema     |
+| phpmyadmin             |
+| shabab_cse370_spring23 |
+| test                   |
++------------------------+
+7 rows in set (0.002 sec)
+
+MariaDB [(none)]> use lab_homework_01;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [lab_homework_01]> show tables;
++---------------------------+
+| Tables_in_lab_homework_01 |
++---------------------------+
+| developers                |
++---------------------------+
+1 row in set (0.002 sec)
+
+MariaDB [lab_homework_01]> insert into developers values
+    -> (2, 'Ryan Dahl', 'ryan@nodejs.org', '633632', '2020-04-22', 10)
+    -> ;
+Query OK, 1 row affected (0.050 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+---------------+--------------------+-----------------+--------------+------------+
+| member_id | name          | email              | influence_count | joining_date | multiplier |
++-----------+---------------+--------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell | otwell@laravel.com | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl     | ryan@nodejs.org    | 633632          | 2020-04-22   |         10 |
++-----------+---------------+--------------------+-----------------+--------------+------------+
+2 rows in set (0.002 sec)
+
+MariaDB [lab_homework_01]> insert into developers values
+    -> (3, 'Brendan Eich', 'eich@javascript.com', '939570', '2020-05-07', 8),
+    -> (5, 'Evan You', 'you@vuejs.org', '982630', '2020-06-11', 7),
+    -> (6, 'Rasmus Lerdorf', 'lerdorf@php.net', '937927', '2020-06-3', 8),
+    -> (7, 'Guido Van Rossum', 'guido@python.org', '968827', '2020-07-18', 19),
+    -> (8, 'Adrian Holovaty', 'adrian@djangoproject.com', '570724', '2020-05-07', 5),
+    -> (9, 'Simon Willison', 'simon@djangoproject.com', '864615', '2020-04-30', 4)
+    -> ;
+Query OK, 6 rows affected (0.024 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+8 rows in set (0.009 sec)
+
+MariaDB [lab_homework_01]> insert into developers values
+    -> (10, 'James Gosling', 'james@java.com', '719491', '2020-05-18', 5),
+    -> (11, 'Rod Johnson', 'rod@spring.io', '601744', '2020-05-18', 7), 
+    -> (12, ‘Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-10', 10)
+    '> ;
+    '> ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' 
+(12, ‘Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-1...' at line 3
+MariaDB [lab_homework_01]> insert into developers values
+    -> (10, 'James Gosling', 'james@java.com', '719491', '2020-05-18', 5),
+    -> (11, 'Rod Johnson', 'rod@spring.io', '601744', '2020-05-18', 7), 
+    -> (12, ‘Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-10', 10)
+    '> ;
+    '> ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' 
+(12, ‘Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-1...' at line 3
+MariaDB [lab_homework_01]> insert into developers values
+    -> (10, 'James Gosling', 'james@java.com', '719491', '2020-05-18', 5),
+    -> (11, 'Rod Johnson', 'rod@spring.io', '601744', '2020-05-18', 7)
+    -> ;
+Query OK, 2 rows affected (0.030 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           | 719491          | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            | 601744          | 2020-05-18   |          7 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+10 rows in set (0.012 sec)
+
+MariaDB [lab_homework_01]> insert into developers values
+    -> (12, ‘Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-10', 10)
+    '> ; 
+    '> ;);
+    '> ;);
+    '> ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Nakamoto', 'nakamoto@blockchain.com', '630488', '2020-05-10', 10)
+; 
+;);
+;);
+')' at line 2
+MariaDB [lab_homework_01]> insert into developers values
+    -> (12, 'Satoshi Nakamoto', 'nakamoto
+    '> @blockchain.com', '630488', '2020-05-10', 10)
+    -> ;
+Query OK, 1 row affected (0.015 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           | 719491          | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            | 601744          | 2020-05-18   |          7 |
+|        12 | Satoshi Nakamoto | nakamoto
+@blockchain.com | 630488          | 2020-05-10   |         10 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+11 rows in set (0.000 sec)
+
+MariaDB [lab_homework_01]> delete from developers where name = 'Satoshi Nakamoto';
+Query OK, 1 row affected (0.071 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           | 719491          | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            | 601744          | 2020-05-18   |          7 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+10 rows in set (0.000 sec)
+
+MariaDB [lab_homework_01]> insert into developers values
+    -> (12, 'Satoshi Nakamoto', 'nakamoto@blockchain.com', '630488', '2020_05-10', 10)
+    -> ;
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [lab_homework_01]> select * from developers;
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+| member_id | name             | email                    | influence_count | joining_date | multiplier |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+|         1 | Taylor Otwell    | otwell@laravel.com       | 739360          | 2020-06-10   |         10 |
+|         2 | Ryan Dahl        | ryan@nodejs.org          | 633632          | 2020-04-22   |         10 |
+|         3 | Brendan Eich     | eich@javascript.com      | 939570          | 2020-05-07   |          8 |
+|         5 | Evan You         | you@vuejs.org            | 982630          | 2020-06-11   |          7 |
+|         6 | Rasmus Lerdorf   | lerdorf@php.net          | 937927          | 2020-06-03   |          8 |
+|         7 | Guido Van Rossum | guido@python.org         | 968827          | 2020-07-18   |         19 |
+|         8 | Adrian Holovaty  | adrian@djangoproject.com | 570724          | 2020-05-07   |          5 |
+|         9 | Simon Willison   | simon@djangoproject.com  | 864615          | 2020-04-30   |          4 |
+|        10 | James Gosling    | james@java.com           | 719491          | 2020-05-18   |          5 |
+|        11 | Rod Johnson      | rod@spring.io            | 601744          | 2020-05-18   |          7 |
+|        12 | Satoshi Nakamoto | nakamoto@blockchain.com  | 630488          | 2020-05-10   |         10 |
++-----------+------------------+--------------------------+-----------------+--------------+------------+
+11 rows in set (0.000 sec)
+
+MariaDB [lab_homework_01]> 
